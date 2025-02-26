@@ -150,6 +150,7 @@ export default function Main() {
                                     src={skill.image}
                                     alt={skill.title}
                                     fill
+                                    loading="eager"
                                     sizes="(max-width: 768px) 100vw, 33vw"
                                     className="object-cover"
                                     priority

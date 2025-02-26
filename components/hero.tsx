@@ -71,6 +71,7 @@ export default function Hero() {
                             <Image
                                 src="/download.jpg"
                                 alt="Resume Icon"
+                                loading="eager"
                                 width={24} // Set specific width
                                 height={24} // Set specific height
                                 className="object-contain"
@@ -91,20 +92,6 @@ export default function Hero() {
                         style={{ y }}
                     >
                         <div className="relative w-full aspect-square group">
-                            {/* Animated Border */}
-                            <motion.div
-                                initial={{ scale: 0.95 }}
-                                animate={{ scale: 1 }}
-                                transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    repeatType: 'mirror'
-                                }}
-                                className="absolute inset-0 rounded-3xl
-                                    bg-gradient-to-r from-primary/30
-                                via-secondary/30 to-tertiary/30
-                                 opacity-50"
-                            />
                             {/* Floating Animation */}
                             <motion.div
                                 animate={{ y: [0, -20, 0] }}
@@ -121,11 +108,15 @@ export default function Hero() {
                                 <Image
                                     src="/me.jpg"
                                     alt="Avatar"
-                                    fill
+                                    width={300} 
+                                    height={300}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    loading="eager"
                                     className="object-cover scale-110 group-hover:scale-90
                                             transition-transform duration-500 hidden md:block"
                                     priority // Optionally add priority for faster loading
                                 />
+                            
                                 <div
                                     className="absolute inset-0 bg-gradient-to-t
                                         from-black/60 to-transparent"
