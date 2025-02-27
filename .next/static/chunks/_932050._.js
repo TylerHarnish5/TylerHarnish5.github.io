@@ -6,7 +6,7 @@
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
-    "default": (()=>__TURBOPACK__default__export__)
+    "default": (()=>Chatbot)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
@@ -14,133 +14,154 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var _s = __turbopack_refresh__.signature();
 "use client";
 ;
-const ChatBot = ()=>{
+function Chatbot() {
     _s();
-    const [message, setMessage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const [chatHistory, setChatHistory] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const chatHistoryRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    // Scroll to the bottom of the chat history when it updates
+    const [input, setInput] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [messages, setMessages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const chatEndRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "ChatBot.useEffect": ()=>{
-            if (chatHistoryRef.current) {
-                chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
+        "Chatbot.useEffect": ()=>{
+            chatEndRef.current?.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    }["Chatbot.useEffect"], [
+        messages
+    ]);
+    const predefinedResponses = {
+        "hello": "Hi there! How can I assist you today?",
+        "how are you": "I'm just a chatbot, but I'm doing great! 😊 How about you?",
+        "what's your name": "I'm a chatbot created by Tyler Harnish!",
+        portfolio: "You can check out my portfolio at [your portfolio link here]!",
+        education: "I am currently studying Computer Science at Kean University, graduating in 2026.",
+        skills: "I have experience with HTML, CSS, JavaScript, React, Next.js, Tailwind, Node.js, and MySQL.",
+        contact: "You can reach me at harnisht@kean.edu or connect with me on LinkedIn: www.linkedin.com/in/tyler-harnish-0744012b1.",
+        resume: "You can download my resume here: [your resume link here].",
+        default: "I'm not sure how to answer that. Try asking about my skills, education, or portfolio!",
+        "bye": "Goodbye! Have a great day! 👋"
+    };
+    const getBotResponse = (message)=>{
+        message = message.toLowerCase();
+        for(const keyword in predefinedResponses){
+            if (message.includes(keyword)) {
+                return predefinedResponses[keyword];
             }
         }
-    }["ChatBot.useEffect"], [
-        chatHistory
-    ]);
-    const handleSendMessage = async ()=>{
-        if (!message.trim()) return; // Don't send empty messages
-        setLoading(true);
-        try {
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    message
-                })
-            });
-            const data = await response.json();
-            const chatbotMessage = data.message || "Error: Unable to fetch response"; // Default error message if there's no response
-            setChatHistory((prev)=>[
-                    ...prev,
-                    `You: ${message}`,
-                    `Bot: ${chatbotMessage}`
-                ]);
-            setMessage("");
-        } catch (error) {
-            console.error("Error sending message:", error);
-        } finally{
-            setLoading(false);
-        }
+        return predefinedResponses["default"];
+    };
+    const sendMessage = ()=>{
+        if (!input.trim()) return;
+        const userMessage = {
+            role: "user",
+            content: input
+        };
+        setMessages((prev)=>[
+                ...prev,
+                userMessage
+            ]);
+        const botMessage = {
+            role: "bot",
+            content: getBotResponse(input)
+        };
+        setMessages((prev)=>[
+                ...prev,
+                botMessage
+            ]);
+        setInput("");
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "bg-gray-800 p-6 rounded-xl shadow-xl max-w-md mx-auto",
+        className: "w-full max-w-md mx-auto bg-gray-800 text-white shadow-lg rounded-lg overflow-hidden",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                ref: chatHistoryRef,
-                className: "h-80 overflow-y-auto border-b border-gray-600 mb-4 p-4 space-y-4",
+                className: "bg-gradient-to-r from-blue-500 to-purple-600 p-4 text-center font-semibold text-xl",
+                children: "Chatbot"
+            }, void 0, false, {
+                fileName: "[project]/components/ChatBot.tsx",
+                lineNumber: 51,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "h-64 overflow-y-auto p-4 space-y-2",
                 children: [
-                    chatHistory.map((entry, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex flex-col space-y-2",
-                            children: entry.startsWith("You:") ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "self-end bg-blue-600 text-white rounded-lg p-3 max-w-xs",
-                                children: entry
-                            }, void 0, false, {
+                    messages.map((msg, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: `flex ${msg.role === "user" ? "justify-end" : "justify-start"}`,
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: `px-4 py-2 max-w-xs rounded-lg text-sm ${msg.role === "user" ? "bg-blue-500 text-white rounded-br-none" : "bg-gray-700 text-gray-200 rounded-bl-none"}`,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                        children: msg.role === "user" ? "You" : "Bot"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ChatBot.tsx",
+                                        lineNumber: 65,
+                                        columnNumber: 15
+                                    }, this),
+                                    ": ",
+                                    msg.content
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/components/ChatBot.tsx",
-                                lineNumber: 52,
-                                columnNumber: 15
-                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "self-start bg-gray-700 text-gray-300 rounded-lg p-3 max-w-xs",
-                                children: entry
-                            }, void 0, false, {
-                                fileName: "[project]/components/ChatBot.tsx",
-                                lineNumber: 56,
-                                columnNumber: 15
+                                lineNumber: 58,
+                                columnNumber: 13
                             }, this)
                         }, index, false, {
                             fileName: "[project]/components/ChatBot.tsx",
-                            lineNumber: 50,
+                            lineNumber: 57,
                             columnNumber: 11
                         }, this)),
-                    loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "italic text-gray-400",
-                        children: "Loading..."
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        ref: chatEndRef
                     }, void 0, false, {
                         fileName: "[project]/components/ChatBot.tsx",
-                        lineNumber: 62,
-                        columnNumber: 21
+                        lineNumber: 69,
+                        columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ChatBot.tsx",
-                lineNumber: 45,
+                lineNumber: 55,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex space-x-2",
+                className: "p-4 border-t border-gray-700 flex",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                         type: "text",
-                        value: message,
-                        onChange: (e)=>setMessage(e.target.value),
-                        placeholder: "Ask me something...",
-                        className: "flex-grow p-3 border border-gray-600 rounded-md mb-4 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    }, void 0, false, {
-                        fileName: "[project]/components/ChatBot.tsx",
-                        lineNumber: 66,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: handleSendMessage,
-                        className: "p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition",
-                        children: "Send"
+                        className: "flex-1 p-2 bg-gray-900 text-white border border-gray-600 rounded-l-lg focus:outline-none",
+                        value: input,
+                        onChange: (e)=>setInput(e.target.value),
+                        onKeyDown: (e)=>e.key === "Enter" && sendMessage(),
+                        placeholder: "Type a message..."
                     }, void 0, false, {
                         fileName: "[project]/components/ChatBot.tsx",
                         lineNumber: 73,
                         columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: sendMessage,
+                        className: "px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-r-lg transition",
+                        children: "Send"
+                    }, void 0, false, {
+                        fileName: "[project]/components/ChatBot.tsx",
+                        lineNumber: 81,
+                        columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ChatBot.tsx",
-                lineNumber: 65,
+                lineNumber: 72,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/ChatBot.tsx",
-        lineNumber: 44,
+        lineNumber: 50,
         columnNumber: 5
     }, this);
-};
-_s(ChatBot, "M8Va3HWxbxidbaF10DS3ivyXLdM=");
-_c = ChatBot;
-const __TURBOPACK__default__export__ = ChatBot;
+}
+_s(Chatbot, "h++uDEfVya4Ub9W9nXcgKfYF1Cc=");
+_c = Chatbot;
 var _c;
-__turbopack_refresh__.register(_c, "ChatBot");
+__turbopack_refresh__.register(_c, "Chatbot");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
@@ -807,20 +828,20 @@ function Main() {
                             children: "EDUCATION"
                         }, void 0, false, {
                             fileName: "[project]/components/main.tsx",
-                            lineNumber: 80,
+                            lineNumber: 79,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "w-16 h-1 bg-gradient-to-r from-primary to-tertiary rounded-full mb-10"
                         }, void 0, false, {
                             fileName: "[project]/components/main.tsx",
-                            lineNumber: 83,
+                            lineNumber: 82,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/main.tsx",
-                    lineNumber: 74,
+                    lineNumber: 73,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -854,7 +875,7 @@ function Main() {
                                         children: edu.title
                                     }, void 0, false, {
                                         fileName: "[project]/components/main.tsx",
-                                        lineNumber: 100,
+                                        lineNumber: 99,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -862,7 +883,7 @@ function Main() {
                                         children: edu.location
                                     }, void 0, false, {
                                         fileName: "[project]/components/main.tsx",
-                                        lineNumber: 101,
+                                        lineNumber: 100,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -870,7 +891,7 @@ function Main() {
                                         children: edu.period
                                     }, void 0, false, {
                                         fileName: "[project]/components/main.tsx",
-                                        lineNumber: 102,
+                                        lineNumber: 101,
                                         columnNumber: 33
                                     }, this),
                                     edu.gpa && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -878,7 +899,7 @@ function Main() {
                                         children: edu.gpa
                                     }, void 0, false, {
                                         fileName: "[project]/components/main.tsx",
-                                        lineNumber: 103,
+                                        lineNumber: 102,
                                         columnNumber: 45
                                     }, this),
                                     edu.degree && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -886,7 +907,7 @@ function Main() {
                                         children: edu.degree
                                     }, void 0, false, {
                                         fileName: "[project]/components/main.tsx",
-                                        lineNumber: 104,
+                                        lineNumber: 103,
                                         columnNumber: 48
                                     }, this),
                                     edu.honors && edu.honors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -896,35 +917,35 @@ function Main() {
                                                 children: honor
                                             }, j, false, {
                                                 fileName: "[project]/components/main.tsx",
-                                                lineNumber: 109,
+                                                lineNumber: 108,
                                                 columnNumber: 45
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/components/main.tsx",
-                                        lineNumber: 107,
+                                        lineNumber: 106,
                                         columnNumber: 37
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/main.tsx",
-                                lineNumber: 99,
+                                lineNumber: 98,
                                 columnNumber: 29
                             }, this)
                         }, i, false, {
                             fileName: "[project]/components/main.tsx",
-                            lineNumber: 89,
+                            lineNumber: 88,
                             columnNumber: 25
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/main.tsx",
-                    lineNumber: 87,
+                    lineNumber: 86,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "h-20"
                 }, void 0, false, {
                     fileName: "[project]/components/main.tsx",
-                    lineNumber: 121,
+                    lineNumber: 120,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -947,20 +968,20 @@ function Main() {
                             children: "SKILLS"
                         }, void 0, false, {
                             fileName: "[project]/components/main.tsx",
-                            lineNumber: 130,
+                            lineNumber: 129,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "w-16 h-1 bg-gradient-to-r from-primary to-tertiary rounded-full"
                         }, void 0, false, {
                             fileName: "[project]/components/main.tsx",
-                            lineNumber: 133,
+                            lineNumber: 132,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/main.tsx",
-                    lineNumber: 124,
+                    lineNumber: 123,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1004,12 +1025,12 @@ function Main() {
                                         priority: true
                                     }, void 0, false, {
                                         fileName: "[project]/components/main.tsx",
-                                        lineNumber: 149,
+                                        lineNumber: 148,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/main.tsx",
-                                    lineNumber: 148,
+                                    lineNumber: 147,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1020,7 +1041,7 @@ function Main() {
                                             children: skill.title
                                         }, void 0, false, {
                                             fileName: "[project]/components/main.tsx",
-                                            lineNumber: 162,
+                                            lineNumber: 161,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1028,7 +1049,7 @@ function Main() {
                                             children: skill.description
                                         }, void 0, false, {
                                             fileName: "[project]/components/main.tsx",
-                                            lineNumber: 163,
+                                            lineNumber: 162,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1043,7 +1064,7 @@ function Main() {
                                                             className: "w-4 h-4 transition-colors"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/main.tsx",
-                                                            lineNumber: 172,
+                                                            lineNumber: 171,
                                                             columnNumber: 49
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1051,46 +1072,46 @@ function Main() {
                                                             children: tech.name
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/main.tsx",
-                                                            lineNumber: 174,
+                                                            lineNumber: 173,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, j, true, {
                                                     fileName: "[project]/components/main.tsx",
-                                                    lineNumber: 167,
+                                                    lineNumber: 166,
                                                     columnNumber: 41
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/components/main.tsx",
-                                            lineNumber: 165,
+                                            lineNumber: 164,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/main.tsx",
-                                    lineNumber: 161,
+                                    lineNumber: 160,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, i, true, {
                             fileName: "[project]/components/main.tsx",
-                            lineNumber: 139,
+                            lineNumber: 138,
                             columnNumber: 25
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/main.tsx",
-                    lineNumber: 137,
+                    lineNumber: 136,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/main.tsx",
-            lineNumber: 72,
+            lineNumber: 71,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/main.tsx",
-        lineNumber: 71,
+        lineNumber: 70,
         columnNumber: 9
     }, this);
 }

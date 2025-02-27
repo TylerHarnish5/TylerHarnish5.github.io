@@ -1,84 +1,90 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-const ChatBot: React.FC = () => {
-  const [message, setMessage] = useState<string>("");
-  const [chatHistory, setChatHistory] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const chatHistoryRef = useRef<HTMLDivElement | null>(null);
+export default function Chatbot() {
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Scroll to the bottom of the chat history when it updates
   useEffect(() => {
-    if (chatHistoryRef.current) {
-      chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const predefinedResponses: { [key: string]: string } = {
+    "hello": "Hi there! How can I assist you today?",
+    "how are you": "I'm just a chatbot, but I'm doing great! 😊 How about you?",
+    "what's your name": "I'm a chatbot created by Tyler Harnish!",
+    portfolio: "You can check out my portfolio at [your portfolio link here]!",
+    education: "I am currently studying Computer Science at Kean University, graduating in 2026.",
+    skills: "I have experience with HTML, CSS, JavaScript, React, Next.js, Tailwind, Node.js, and MySQL.",
+    contact: "You can reach me at harnisht@kean.edu or connect with me on LinkedIn: www.linkedin.com/in/tyler-harnish-0744012b1.",
+    resume: "You can download my resume here: [your resume link here].",
+    default: "I'm not sure how to answer that. Try asking about my skills, education, or portfolio!",
+    "bye": "Goodbye! Have a great day! 👋"
+  };
+
+  const getBotResponse = (message: string) => {
+    message = message.toLowerCase();
+
+    for (const keyword in predefinedResponses) {
+      if (message.includes(keyword)) {
+        return predefinedResponses[keyword];
+      }
     }
-  }, [chatHistory]);
+    return predefinedResponses["default"];
+  };
 
-  const handleSendMessage = async () => {
-    if (!message.trim()) return;  // Don't send empty messages
+  const sendMessage = () => {
+    if (!input.trim()) return;
 
-    setLoading(true);
+    const userMessage = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
 
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message }),
-      });
+    const botMessage = { role: "bot", content: getBotResponse(input) };
+    setMessages((prev) => [...prev, botMessage]);
 
-      const data = await response.json();
-      const chatbotMessage = data.message || "Error: Unable to fetch response";  // Default error message if there's no response
-
-      setChatHistory((prev) => [...prev, `You: ${message}`, `Bot: ${chatbotMessage}`]);
-      setMessage("");
-    } catch (error) {
-      console.error("Error sending message:", error);
-    } finally {
-      setLoading(false);
-    }
+    setInput("");
   };
 
   return (
-    <div className="bg-gray-800 p-6 rounded-xl shadow-xl max-w-md mx-auto">
-      <div
-        ref={chatHistoryRef}
-        className="h-80 overflow-y-auto border-b border-gray-600 mb-4 p-4 space-y-4"
-      >
-        {chatHistory.map((entry, index) => (
-          <div key={index} className="flex flex-col space-y-2">
-            {entry.startsWith("You:") ? (
-              <div className="self-end bg-blue-600 text-white rounded-lg p-3 max-w-xs">
-                {entry}
-              </div>
-            ) : (
-              <div className="self-start bg-gray-700 text-gray-300 rounded-lg p-3 max-w-xs">
-                {entry}
-              </div>
-            )}
-          </div>
-        ))}
-        {loading && <p className="italic text-gray-400">Loading...</p>}
+    <div className="w-full max-w-md mx-auto bg-gray-800 text-white shadow-lg rounded-lg overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 text-center font-semibold text-xl">
+        Chatbot
       </div>
 
-      <div className="flex space-x-2">
+      <div className="h-64 overflow-y-auto p-4 space-y-2">
+        {messages.map((msg, index) => (
+          <div key={index} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+            <div
+              className={`px-4 py-2 max-w-xs rounded-lg text-sm ${
+                msg.role === "user"
+                  ? "bg-blue-500 text-white rounded-br-none"
+                  : "bg-gray-700 text-gray-200 rounded-bl-none"
+              }`}
+            >
+              <strong>{msg.role === "user" ? "You" : "Bot"}</strong>: {msg.content}
+            </div>
+          </div>
+        ))}
+        <div ref={chatEndRef} />
+      </div>
+
+      <div className="p-4 border-t border-gray-700 flex">
         <input
           type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Ask me something..."
-          className="flex-grow p-3 border border-gray-600 rounded-md mb-4 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 p-2 bg-gray-900 text-white border border-gray-600 rounded-l-lg focus:outline-none"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          placeholder="Type a message..."
         />
         <button
-          onClick={handleSendMessage}
-          className="p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+          onClick={sendMessage}
+          className="px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-r-lg transition"
         >
           Send
         </button>
       </div>
     </div>
   );
-};
-
-export default ChatBot;
+}

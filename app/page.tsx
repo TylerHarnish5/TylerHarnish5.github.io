@@ -1,5 +1,5 @@
 // app/page.tsx
-import ChatBot from "@/components/ChatBot";
+import Chatbot from "@/components/ChatBot";
 import Footer from "@/components/footer";
 import Hero from "@/components/hero";
 import Main from "@/components/main";
@@ -12,9 +12,9 @@ export default function Home() {
       <Hero />
       <Main />
 
-      {/* Add ChatBot component */}
-      <div className="p-6">
-        <ChatBot />
+      {/* Add Chatbot component */}
+      <div className="p-6 flex justify-center">
+        <Chatbot />
       </div>
 
       <Footer />
