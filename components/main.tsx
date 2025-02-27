@@ -1,9 +1,8 @@
 'use client';
 import { motion } from "framer-motion";
-import { FaCss3, FaHtml5, FaNode, FaReact } from "react-icons/fa";
-import { SiCss3, SiJavascript, SiNextdotjs, SiTailwindcss } from "react-icons/si";
+import { FaHtml5, FaNode, FaReact } from "react-icons/fa";
+import { SiJavascript, SiNextdotjs, SiTailwindcss } from "react-icons/si";
 import Image from "next/image";
-import { DiJavascript } from "react-icons/di";
 import { TiCss3 } from "react-icons/ti";
 
 // Updated Education Data
