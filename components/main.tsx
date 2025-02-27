@@ -1,8 +1,10 @@
 'use client';
 import { motion } from "framer-motion";
-import { FaNode, FaReact } from "react-icons/fa";
-import { SiNextdotjs, SiTailwindcss } from "react-icons/si";
+import { FaCss3, FaHtml5, FaNode, FaReact } from "react-icons/fa";
+import { SiCss3, SiJavascript, SiNextdotjs, SiTailwindcss } from "react-icons/si";
 import Image from "next/image";
+import { DiJavascript } from "react-icons/di";
+import { TiCss3 } from "react-icons/ti";
 
 // Updated Education Data
 const Education = [
@@ -16,7 +18,6 @@ const Education = [
       "Fall 24 Dean's Honor List",
       "Fall 23 Dean’s Honor List",
     ],
-    image: '/Education/kean.jpg', // Update with an appropriate image path
   },
   {
     title: "Brookdale Community College",
@@ -26,7 +27,6 @@ const Education = [
       "Fall 22 Dean’s Honor List",
       "Fall 21 Dean’s Honor List",
     ],
-    image: '/Education/brookdale.jpg', // Update with an appropriate image path
   },
 ];
 
@@ -36,14 +36,14 @@ const Skills = [
         title: "Front End Development",
         description: "Experience creating web applications using these tools:",
         tech: [
-            { name: "HTML", icon: FaReact, color: "#000000" },
-            { name: "CSS", icon: FaReact, color: "#000000" },
-            { name: "JavaScript", icon: FaReact, color: "#000000" },                                
+            { name: "HTML", icon: FaHtml5, color: "#000000" },
+            { name: "CSS", icon: TiCss3, color: "#000000" },
+            { name: "JavaScript", icon: SiJavascript, color: "#000000" },                                
             { name: "React", icon: FaReact, color: "#61DAFB" },
             { name: "Next.js", icon: SiNextdotjs, color: "000000" },
             { name: "Tailwind", icon: SiTailwindcss, color: "06B6D4" },
         ],
-        image: '/Skills/ecommerce.png'
+        image: '/skills/ecommerce.png'
     },
     {
         title: "Back End Development",
@@ -52,7 +52,7 @@ const Skills = [
             { name: "Node.js", icon: FaNode, color: "#339933" },
             { name: "MySQL", icon: SiNextdotjs, color: "000000" },
         ],
-        image: '/Skills/analytics.jpg'
+        image: '/skills/analytics.jpg'
     },
     {
         title: "Other Hard Skills",
@@ -62,7 +62,7 @@ const Skills = [
             { name: "RStudio", icon: null, color: "#000000" },
             { name: "R", icon: null, color: "#000000" },
         ],
-        image: '/Skills/mobile.jpg'
+        image: '/skills/mobile.jpg'
     },
 ];
 

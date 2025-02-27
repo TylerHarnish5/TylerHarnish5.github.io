@@ -670,9 +670,11 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/image.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/fa/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$ti$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/ti/index.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$si$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/si/index.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs [app-client] (ecmascript)");
 'use client';
+;
 ;
 ;
 ;
@@ -689,8 +691,7 @@ const Education = [
         honors: [
             "Fall 24 Dean's Honor List",
             "Fall 23 Dean’s Honor List"
-        ],
-        image: '/Education/kean.jpg'
+        ]
     },
     {
         title: "Brookdale Community College",
@@ -699,8 +700,7 @@ const Education = [
         honors: [
             "Fall 22 Dean’s Honor List",
             "Fall 21 Dean’s Honor List"
-        ],
-        image: '/Education/brookdale.jpg'
+        ]
     }
 ];
 // Skills data remains unchanged for now
@@ -711,17 +711,17 @@ const Skills = [
         tech: [
             {
                 name: "HTML",
-                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FaReact"],
+                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FaHtml5"],
                 color: "#000000"
             },
             {
                 name: "CSS",
-                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FaReact"],
+                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$ti$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TiCss3"],
                 color: "#000000"
             },
             {
                 name: "JavaScript",
-                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FaReact"],
+                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$si$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SiJavascript"],
                 color: "#000000"
             },
             {
@@ -740,7 +740,7 @@ const Skills = [
                 color: "06B6D4"
             }
         ],
-        image: '/Skills/ecommerce.png'
+        image: '/skills/ecommerce.png'
     },
     {
         title: "Back End Development",
@@ -757,7 +757,7 @@ const Skills = [
                 color: "000000"
             }
         ],
-        image: '/Skills/analytics.jpg'
+        image: '/skills/analytics.jpg'
     },
     {
         title: "Other Hard Skills",
@@ -779,7 +779,7 @@ const Skills = [
                 color: "#000000"
             }
         ],
-        image: '/Skills/mobile.jpg'
+        image: '/skills/mobile.jpg'
     }
 ];
 function Main() {
