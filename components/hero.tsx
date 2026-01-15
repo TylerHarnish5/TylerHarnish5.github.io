@@ -55,7 +55,7 @@ export default function Hero() {
 
             {/* Resume Button */}
            <motion.a
-                href="/Resume.pdf"
+                href="/resume.pdf"
                 download
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
