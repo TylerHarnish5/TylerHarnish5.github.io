@@ -218,9 +218,6 @@ export default function Main() {
                       className="px-3 py-1 rounded-full bg-white/5 text-content/80 text-sm border border-white/5 
                                  hover:bg-surface transition-colors flex items-center gap-1.5 group/tech"
                     >
-                      {tech.icon && (
-                        <tech.icon style={{ color: tech.color }} className="w-4 h-4 transition-colors" />
-                      )}
                       <span className="group-hover/tech:text-content transition-colors">{tech.name}</span>
                     </span>
                   ))}
