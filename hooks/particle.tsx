@@ -1,7 +1,9 @@
-
 'use client';
 import { useCallback, useRef } from 'react';
 import { useCanvas } from './useCanvas';
+
+const NUM_PARTICLES = 25;        // ↓ reduced from 50
+const MAX_CONNECTIONS = 50;     // ↓ max number of lines per frame
 
 class Particle {
   x: number;
@@ -43,9 +45,9 @@ export function ParticleCanvas() {
   const particles = useRef<Particle[]>([]);
 
   const draw = useCallback((ctx: CanvasRenderingContext2D) => {
-    // Initialize particles
-    if (particles.current.length === 0) {
-      particles.current = Array.from({ length: 50 }, () => new Particle(ctx));
+    // Initialize particles (now fewer)
+    if (particles.current.length !== NUM_PARTICLES) {
+      particles.current = Array.from({ length: NUM_PARTICLES }, () => new Particle(ctx));
     }
 
     // Clear canvas with trail effect
@@ -58,10 +60,15 @@ export function ParticleCanvas() {
       particle.draw(ctx);
     });
 
-    // Create gradient connection lines
+    // Create gradient connection lines (with a cap)
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+
+    let connections = 0; // count how many lines we’ve drawn this frame
+
     for (let i = 0; i < particles.current.length; i++) {
-      for (let j = i; j < particles.current.length; j++) {
+      for (let j = i + 1; j < particles.current.length; j++) {
+        if (connections >= MAX_CONNECTIONS) break; // stop drawing more lines
+
         const dx = particles.current[i].x - particles.current[j].x;
         const dy = particles.current[i].y - particles.current[j].y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -71,8 +78,10 @@ export function ParticleCanvas() {
           ctx.moveTo(particles.current[i].x, particles.current[i].y);
           ctx.lineTo(particles.current[j].x, particles.current[j].y);
           ctx.stroke();
+          connections++;
         }
       }
+      if (connections >= MAX_CONNECTIONS) break;
     }
   }, []);
 

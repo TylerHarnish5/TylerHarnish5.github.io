@@ -9,13 +9,14 @@ const navItems = [
   { name: 'About', href: '#about' }, 
   { name: 'Education', href: '#education' },
   { name: 'Skills', href: '#skills' },
+  { name: 'Projects', href: '#projects' },
   { name: 'Contact', href: '#contact' },
 ];
 
 const socialLinks = {
-  github: "https://github.com/yourusername",
+  github: "https://github.com/TylerHarnish5",
   linkedin: "https://www.linkedin.com/in/tyler-harnish-0744012b1/",
-  twitter: "https://twitter.com/yourusername"
+  twitter: "https://twitter.com/yourusername" //not ready
 };
 
 export default function Navbar() {
@@ -28,12 +29,22 @@ export default function Navbar() {
   });
 
   // Function to scroll smoothly to a section
+// Function to scroll smoothly to a section WITH OFFSET
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      const navbarHeight = 90; 
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      const targetPosition = sectionTop - navbarHeight;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
+
+
 
   return (
     <motion.nav
@@ -59,14 +70,14 @@ export default function Navbar() {
                 </span>
               </div>
             </div>
-            <span className="font-semibold text-content/90 group-hover:text-primary transition-colors">
+            <span className="font-semibold text-content/90 text-xl">
               Tyler Harnish
             </span>
           </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            <div className="flex items-center gap-6 bg-background/80 px-4 py-2 
+            <div className="flex items-center text-xl gap-6 bg-background/80 px-4 py-2 
             rounded-full border border-white/5 shadow-lg shadow-primary/5">
               {navItems.map((item, i) => (
                 item.name === 'About' || item.name === 'Contact' || item.name === 'Skills' || item.name === 'Education' ? (
@@ -94,7 +105,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="p-2 rounded-lg bg-white/5 hover:bg-primary/10 transition-colors group"
               >
-                <GithubIcon className="h-5 w-5 text-content/80 group-hover:text-primary transition-colors" />
+                <GithubIcon className="h-7 w-7 text-content/80  group-hover:text-primary transition-colors" />
               </a>
               <a
                 href={socialLinks.linkedin}
@@ -102,7 +113,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="p-2 rounded-lg bg-white/5 hover:bg-primary/10 transition-colors group"
               >
-                <LinkedInIcon className="h-5 w-5 text-content/80 group-hover:text-primary transition-colors" />
+                <LinkedInIcon className="h-7 w-7 text-content/80 group-hover:text-primary transition-colors" />
               </a>
             </div>
           </div>
@@ -147,7 +158,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="p-2 rounded-lg bg-white/5 hover:bg-primary/10 transition-colors group"
               >
-                <GithubIcon className="h-5 w-5 text-content/80 group-hover:text-primary transition-colors" />
+                <GithubIcon className="h-7 w-7 text-content/80 group-hover:text-primary transition-colors" />
               </a>
               <a
                 href={socialLinks.linkedin}
@@ -155,7 +166,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="p-2 rounded-lg bg-white/5 hover:bg-primary/10 transition-colors group"
               >
-                <LinkedInIcon className="h-5 w-5 text-content/80 group-hover:text-primary transition-colors" />
+                <LinkedInIcon className="h-7 w-7 text-content/80 group-hover:text-primary transition-colors" />
               </a>
             </div>
           </motion.div>
