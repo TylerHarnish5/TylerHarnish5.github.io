@@ -86,8 +86,9 @@ const Projects = [
     ],
     image: "/thispage_stock.png",
     links: {
-      live: "https://tylerharnish5.github.io", // change to your real URL if different
-      github: "https://github.com/TylerHarnish5", // change to your repo URL if you want
+      live: "https://tylerharnish5.github.io", 
+      github: "https://github.com/TylerHarnish5",
+      githubPortfolio: "https://github.com/TylerHarnish5/TylerHarnish5.github.io",
     },
   },
   {
@@ -277,9 +278,9 @@ export default function Main() {
 
           {/* Links (optional) */}
           <div className="flex gap-2">
-            {project.links?.github && (
+            {project.links?.githubPortfolio && (
               <a
-                href={project.links.github}
+                href={project.links.githubPortfolio}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-1 rounded-full bg-white/10 text-content text-sm border border-white/20
@@ -288,7 +289,7 @@ export default function Main() {
                   cursor-pointer select-none
                   focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               >
-                GitHub Repository NOT CORRECT RN ↗
+                GitHub Repository ↗
               </a>
             )}
           </div>
