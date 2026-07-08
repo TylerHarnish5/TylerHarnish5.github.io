@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <section id="about" className="min-h-screen relative overflow-hidden bg-black">
       <ParticleCanvas />
-      <div className="max-w-7xl mx-auto px-6 pt-32">
+      <div className="max-w-7xl mx-auto px-6 pt-32 pb-16 lg:pb-24">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           {/* Text content */}
           <motion.div
@@ -46,11 +46,12 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 1.1 }}
               className="text-2xl text-content/80 mb-8"
             >
-              I am a Computer Science student at Kean University graduating in May 2026,
-              with experience in web development, databases, and machine learning. I have built
-              responsive web applications using React and Next.js and worked on data-driven projects
-              involving text analysis and classification. I am motivated by building practical
-              software solutions and continuously expanding my technical skill set.
+              I am a computer science graduate with experience in
+              web development, machine learning, deep learning, databases, and technical support.
+              I have built responsive web applications using React and Next.js and worked on
+              machine learning projects using Python, PyTorch, and scikit-learn. One of these projects
+              is a ResNet18 waste-image classifier that achieved 95.65% test accuracy. I am motivated to
+              continue building practical software solutions and expanding my technical skills.
             </motion.p>
 
             {/* Resume Button */}
@@ -142,7 +143,7 @@ export default function Hero() {
                       }}
                       style={{ backgroundSize: "200% 200%" }}
                     >
-                      Union, NJ
+                      Manalapan, NJ
                     </motion.span>
                   </div>
                 </motion.div>

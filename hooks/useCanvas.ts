@@ -11,34 +11,45 @@ export const useCanvas = (draw: DrawFunction) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationFrameId: number;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth * devicePixelRatio;
-      canvas.height = window.innerHeight * devicePixelRatio;
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      ctx.scale(devicePixelRatio, devicePixelRatio);
+      const parent = canvas.parentElement;
+      if (!parent) return;
+
+      const width = parent.clientWidth;
+      const height = parent.clientHeight;
+      const ratio = window.devicePixelRatio || 1;
+
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     };
 
-    const init = () => {
+    resizeCanvas();
+
+    const resizeObserver = new ResizeObserver(() => {
       resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
+    });
 
-      const render = () => {
-        draw(ctx);
-        animationFrameId = requestAnimationFrame(render);
-      };
-      render();
+    resizeObserver.observe(canvas.parentElement ?? canvas);
+
+    const render = () => {
+      draw(ctx);
+      animationFrameId = requestAnimationFrame(render);
     };
 
-    init();
+    render();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      resizeObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, [draw]);

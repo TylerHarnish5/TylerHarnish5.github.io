@@ -7,9 +7,10 @@ const Education = [
   {
     title: "Kean University",
     location: "Union, NJ",
-    period: "2023 - Present",
-    gpa: "3.75 / 4.00 GPA",
-    degree: "Bachelor of Science in Computer Science: Expected May 2026",
+    period: "2023 - 2026",
+    gpa: "3.76 / 4.00 GPA",
+    honor: "Magna Cum Laude",
+    degree: "Bachelor of Science in Computer Science",
     honors: [
       "Fall 25 Dean's Honor List",
       "Spring 25 Dean's Honor List",
@@ -28,7 +29,6 @@ const Education = [
   },
 ];
 
-// Skills data remains unchanged for now
 const Skills = [
   {
     title: "Languages",
@@ -37,39 +37,76 @@ const Skills = [
       { name: "Python", icon: null, color: "#000000" },
       { name: "JavaScript", icon: null, color: "#000000" },
       { name: "SQL", icon: null, color: "#000000" },
-      { name: "Java", icon: null, color: "#000000" },
+      { name: "PL/SQL", icon: null, color: "#000000" },
       { name: "TypeScript", icon: null, color: "#000000" },
+      { name: "HTML", icon: null, color: "#000000" },
+      { name: "CSS", icon: null, color: "#000000" },
     ],
     image: '/skills/python_stock.jpg'
   },
   {
-    title: "Frontend",
-    description: "Technologies used to design and build responsive, user-facing web interfaces.",
+    title: "Framework & Libraries",
+    description: "Frameworks and libraries used to build responsive web applications, user interfaces, and machine learning solutions.",
     tech: [
-      { name: "HTML", icon: null, color: "#000000" },
-      { name: "CSS", icon: null, color: "#000000" },
-      { name: "React", icon: null, color: "#61DAFB" },
+      { name: "React", icon: null, color: "#000000" },
       { name: "Next.js", icon: null, color: "#000000" },
+      { name: "PyTorch", icon: null, color: "#000000" },
+      { name: "torchvision", icon: null, color: "#000000" },
+      { name: "scikit-learn", icon: null, color: "#000000" },
+      { name: "Pandas", icon: null, color: "#000000" },
       { name: "Tailwind CSS", icon: null, color: "#000000" },
     ],
-    image: '/skills/html_stock.jpg'
+    image: '/skills/PyTorch_stock.webp'
   },
   {
-    title: "Backend / Database",
-    description: "Technologies used for data storage, querying, and backend system logic.",
+    title: "Databases",
+    description: "Database technologies used for data storage, organization, and querying.",
     tech: [
       { name: "MySQL", icon: null, color: "#000000" },
-      { name: "PL/SQL", icon: null, color: "#000000" },
     ],
-    image: '/skills/sql_stock.png'
+    image: '/skills/MySQL_stock.png'
+  },
+  {//Tools & Platforms: GitHub, Vercel, Hugging Face Datasets 
+    title: "Tools & Platforms",
+    description: "Development tools and platforms used for version control, deployment, and machine learning resources.",
+    tech: [
+      { name: "GitHub", icon: null, color: "#000000" },
+      { name: "Vercel", icon: null, color: "#000000" },
+      { name: "Hugging Face Datasets", icon: null, color: "#000000" },
+    ],
+    image: '/skills/GitHub.png'
   },
 ];
 
 
-//pasting skills section to convert it into a projects section
 const Projects = [
   {
-    title: "Portfolio Web Application (This Wesbite)",
+    title: "TrashNet Waste Image Classification Using Deep Learning",
+    description:
+      "Deep learning image classification project that identifies waste across six material categories using transfer learning with ResNet18.",
+    bullets: [
+      "Trained a transfer-learning image classification model on 5,054 TrashNet images across cardboard, glass, metal, paper, plastic, and trash categories.",
+      "Tuned a pretrained ResNet18 model and evaluated a deeper classifier head using batch normalization, ReLU activation, and dropout.",
+      "Achieved 95.65% test accuracy and conducted an ablation study comparing the baseline model, architectural modification, and weight-decay regularization.",
+    ],
+    tech: [
+      { name: "Python", icon: null, color: "#000000" },
+      { name: "PyTorch", icon: null, color: "#000000" },
+      { name: "torchvision", icon: null, color: "#000000" },
+      { name: "ResNet18", icon: null, color: "#000000" },
+      { name: "Pandas", icon: null, color: "#000000" },
+      { name: "Matplotlib", icon: null, color: "#000000" },
+      { name: "Hugging Face Datasets", icon: null, color: "#000000" },
+    ],
+    image: "/waste-image_stock.png",
+    links: {
+      colab:
+        "https://colab.research.google.com/drive/15ibUzovZwcCwy_JtKk8G6oy3fLqBX4Hd?usp=sharing",
+    },
+  },
+
+  {
+    title: "Portfolio Web Application (This Website)",
     description:
       "Responsive personal portfolio built with a component-based architecture to present projects, skills, and education.",
     bullets: [
@@ -152,6 +189,7 @@ export default function Main() {
                 <p className="text-content/80 mb-1 mt-2">{edu.location}</p>
                 <p className="text-content/80 mb-1">{edu.period}</p>
                 {edu.gpa && <p className="text-content/80 mb-1">{edu.gpa}</p>}
+                {edu.honor && <p className="text-content/80 mb-1">{edu.honor}</p>}
                 {edu.degree && <p className="text-content/80 mb-4">{edu.degree}</p>}
 
                 {edu.honors && edu.honors.length > 0 && (
@@ -186,7 +224,7 @@ export default function Main() {
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 relative z-10">
           {Skills.map((skill, i) => (
             <motion.div
               key={i}
@@ -246,7 +284,7 @@ export default function Main() {
         </motion.div>
 
 {/* Projects Grid */}
-<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 relative z-10">
+<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
   {Projects.map((project, i) => (
     <motion.div
       key={i}
@@ -277,19 +315,36 @@ export default function Main() {
           <h3 className="text-2xl font-bold text-content">{project.title}</h3>
 
           {/* Links (optional) */}
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {project.links?.githubPortfolio && (
               <a
                 href={project.links.githubPortfolio}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-1 rounded-full bg-white/10 text-content text-sm border border-white/20
-                hover:bg-white/20 hover:border-white/40 hover:shadow-md
+                  hover:bg-white/20 hover:border-white/40 hover:shadow-md
                   active:scale-95 transition-all duration-200
-                  cursor-pointer select-none
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                  cursor-pointer select-none whitespace-nowrap
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary
+                  focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               >
-                GitHub Repository ↗
+                GitHub ↗
+              </a>
+            )}
+
+            {project.links?.colab && (
+              <a
+                href={project.links.colab}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1 rounded-full bg-white/10 text-content text-sm border border-white/20
+                  hover:bg-white/20 hover:border-white/40 hover:shadow-md
+                  active:scale-95 transition-all duration-200
+                  cursor-pointer select-none whitespace-nowrap
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary
+                  focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              >
+                Google Colab ↗
               </a>
             )}
           </div>
