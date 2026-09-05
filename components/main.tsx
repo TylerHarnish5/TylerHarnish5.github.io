@@ -36,9 +36,9 @@ const Skills = [
     tech: [
       { name: "Python", icon: null, color: "#000000" },
       { name: "JavaScript", icon: null, color: "#000000" },
+      { name: "TypeScript", icon: null, color: "#000000" },
       { name: "SQL", icon: null, color: "#000000" },
       { name: "PL/SQL", icon: null, color: "#000000" },
-      { name: "TypeScript", icon: null, color: "#000000" },
       { name: "HTML", icon: null, color: "#000000" },
       { name: "CSS", icon: null, color: "#000000" },
     ],
@@ -50,11 +50,15 @@ const Skills = [
     tech: [
       { name: "React", icon: null, color: "#000000" },
       { name: "Next.js", icon: null, color: "#000000" },
+      { name: "FastAPI", icon: null, color: "000000"},
+      { name: "Pydantic", icon: null, color: "#000000" },
+      { name: "SQLAlchemy", icon: null, color: "#000000" },
       { name: "PyTorch", icon: null, color: "#000000" },
       { name: "torchvision", icon: null, color: "#000000" },
       { name: "scikit-learn", icon: null, color: "#000000" },
       { name: "Pandas", icon: null, color: "#000000" },
       { name: "Tailwind CSS", icon: null, color: "#000000" },
+      { name: "Framer Motion", icon: null, color: "#000000" },
     ],
     image: '/skills/PyTorch_stock.webp'
   },
@@ -62,7 +66,10 @@ const Skills = [
     title: "Databases",
     description: "Database technologies used for data storage, organization, and querying.",
     tech: [
+      { name: "PostgreSQL", icon: null, color: "#000000" },
       { name: "MySQL", icon: null, color: "#000000" },
+      { name: "REST APIs", icon: null, color: "#000000" },
+      { name: "Alembic", icon: null, color: "#000000" },
     ],
     image: '/skills/MySQL_stock.png'
   },
@@ -70,9 +77,17 @@ const Skills = [
     title: "Tools & Platforms",
     description: "Development tools and platforms used for version control, deployment, and machine learning resources.",
     tech: [
+      { name: "Git", icon: null, color: "#000000" },
       { name: "GitHub", icon: null, color: "#000000" },
       { name: "Vercel", icon: null, color: "#000000" },
       { name: "Hugging Face Datasets", icon: null, color: "#000000" },
+      { name: "Docker", icon: null, color: "#000000" },
+      { name: "Docker Compose", icon: null, color: "#000000" },
+      { name: "pytest", icon: null, color: "#000000" },
+      { name: "GitHub Actions", icon: null, color: "#000000" },
+      { name: "Ruff", icon: null, color: "#000000" },
+      { name: "n8n", icon: null, color: "#000000" },
+      { name: "AWS EC2/RDS", icon: null, color: "#000000" },
     ],
     image: '/skills/GitHub.png'
   },
@@ -80,6 +95,37 @@ const Skills = [
 
 
 const Projects = [
+  {
+    title: "Residential Clothing Automation Platform",
+    description:
+      "Full-stack order-management platform for residential clothing providers, featuring inventory automation, approval workflows, PostgreSQL persistence, and n8n-based external order intake.",
+    bullets: [
+      "Built a Python and FastAPI REST API with Pydantic validation for catalog, inventory, resident, order, approval, and fulfillment workflows; enforced per-order budgets, price snapshots, and partial-fulfillment rules.",
+      "Designed relational data models with SQLAlchemy and Alembic, including idempotency safeguards that prevent duplicate writes during request retries.",
+      "Automated inventory reservation and warehouse-task creation, and built a protected n8n workflow that transforms friendly product labels into validated SKUs and creates draft orders through the API.",
+      "Developed a lightweight JavaScript operational frontend; wrote 71+ pytest tests; and configured Ruff, GitHub Actions, Docker Compose, and AWS EC2/RDS deployment.",
+    ],
+    tech: [
+      { name: "Python", icon: null, color: "#000000" },
+      { name: "FastAPI", icon: null, color: "#000000" },
+      { name: "Pydantic", icon: null, color: "#000000" },
+      { name: "PostgreSQL", icon: null, color: "#000000" },
+      { name: "SQLAlchemy", icon: null, color: "#000000" },
+      { name: "Alembic", icon: null, color: "#000000" },
+      { name: "Docker", icon: null, color: "#000000" },
+      { name: "Docker Compose", icon: null, color: "#000000" },
+      { name: "pytest", icon: null, color: "#000000" },
+      { name: "GitHub Actions", icon: null, color: "#000000" },
+      { name: "Ruff", icon: null, color: "#000000" },
+      { name: "n8n", icon: null, color: "#000000" },
+      { name: "AWS EC2/RDS", icon: null, color: "#000000" },
+    ],
+    image: "/architecture-diagram.svg",
+    links: {
+      GitHub_ResidentialClothingAutomation:
+        "https://github.com/TylerHarnish5/residential-clothing-automation",
+    },
+  },
   {
     title: "TrashNet Waste Image Classification Using Deep Learning",
     description:
@@ -345,6 +391,22 @@ export default function Main() {
                   focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               >
                 Google Colab ↗
+              </a>
+            )}
+
+             {project.links?.GitHub_ResidentialClothingAutomation && (
+              <a
+                href={project.links.GitHub_ResidentialClothingAutomation}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1 rounded-full bg-white/10 text-content text-sm border border-white/20
+                  hover:bg-white/20 hover:border-white/40 hover:shadow-md
+                  active:scale-95 transition-all duration-200
+                  cursor-pointer select-none whitespace-nowrap
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary
+                  focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              >
+                GitHub ↗
               </a>
             )}
           </div>

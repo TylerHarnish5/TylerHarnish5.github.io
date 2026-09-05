@@ -46,17 +46,17 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 1.1 }}
               className="text-2xl text-content/80 mb-8"
             >
-              I am a computer science graduate with experience in
-              web development, machine learning, deep learning, databases, and technical support.
-              I have built responsive web applications using React and Next.js and worked on
-              machine learning projects using Python, PyTorch, and scikit-learn. One of these projects
-              is a ResNet18 waste-image classifier that achieved 95.65% test accuracy. I am motivated to
-              continue building practical software solutions and expanding my technical skills.
+              I am a computer science graduate focused on building reliable full-stack and data-driven applications.
+              I build responsive interfaces with React, Next.js, TypeScript, and Tailwind CSS, and backend services
+              with Python, FastAPI, PostgreSQL, SQLAlchemy, and REST APIs. Most recently, I developed a residential
+              clothing automation platform with Docker, AWS EC2/RDS, GitHub Actions, and n8n-based order intake.
+              I also build machine learning solutions with PyTorch and scikit-learn, including a ResNet18 waste-image
+              classifier that achieved 95.65% test accuracy.
             </motion.p>
 
             {/* Resume Button */}
            <motion.a
-                href="/resume.pdf"
+                href="/Tyler_Harnish_Resume.pdf"
                 download
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.95 }}
                 className="relative inline-flex px-8 py-4 rounded-full bg-surface
                         border border-white/10 hover:border-primary/30
-                        transition-all group"   // 👈 group lives HERE now
+                        transition-all group"   // group lives HERE now
             >
                 <div className="flex items-center space-x-2">
                 <span className="text-content text-2xl group-hover:text-primary transition-colors">

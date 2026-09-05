@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img" aria-labelledby="title desc">
+  <title id="title">Residential Clothing Automation Platform Architecture</title>
+  <desc id="desc">A diagram showing local Docker development and AWS deployment. Browser dashboard and n8n call FastAPI, which applies business rules and stores data in PostgreSQL.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fafc"/>
+      <stop offset="100%" stop-color="#edf4f8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#18324a" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#355d7b"/>
+    </marker>
+    <style>
+      .title { font: 700 40px Arial, Helvetica, sans-serif; fill: #18324a; }
+      .subtitle { font: 400 20px Arial, Helvetica, sans-serif; fill: #567086; }
+      .lane-title { font: 700 24px Arial, Helvetica, sans-serif; fill: #18324a; }
+      .lane-note { font: 400 16px Arial, Helvetica, sans-serif; fill: #567086; }
+      .card-title { font: 700 21px Arial, Helvetica, sans-serif; fill: #18324a; }
+      .card-text { font: 400 16px Arial, Helvetica, sans-serif; fill: #385367; }
+      .micro { font: 600 14px Arial, Helvetica, sans-serif; fill: #567086; letter-spacing: 1px; }
+      .arrow-label { font: 600 15px Arial, Helvetica, sans-serif; fill: #355d7b; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="920" fill="url(#background)"/>
+  <text x="90" y="90" class="title">Residential Clothing Automation Platform</text>
+  <text x="90" y="126" class="subtitle">A portfolio overview of the local development and AWS deployment architecture</text>
+
+  <rect x="70" y="180" width="1460" height="315" rx="22" fill="#e8f3fb" stroke="#bdd7e8" stroke-width="2"/>
+  <text x="105" y="225" class="lane-title">Local development</text>
+  <text x="105" y="252" class="lane-note">Docker Compose provides a reproducible FastAPI and PostgreSQL environment on the developer’s computer.</text>
+
+  <rect x="125" y="300" width="245" height="135" rx="16" fill="#ffffff" filter="url(#shadow)"/>
+  <text x="155" y="342" class="micro">USER INTERFACE</text>
+  <text x="155" y="374" class="card-title">Browser dashboard</text>
+  <text x="155" y="404" class="card-text">Orders, catalog, approval,</text>
+  <text x="155" y="427" class="card-text">and fulfillment workflow</text>
+
+  <rect x="465" y="300" width="245" height="135" rx="16" fill="#ffffff" filter="url(#shadow)"/>
+  <text x="495" y="342" class="micro">AUTOMATION</text>
+  <text x="495" y="374" class="card-title">n8n workflow</text>
+  <text x="495" y="404" class="card-text">Maps form-friendly labels</text>
+  <text x="495" y="427" class="card-text">to product SKUs</text>
+
+  <rect x="840" y="286" width="310" height="165" rx="16" fill="#dcecf7" stroke="#4b83aa" stroke-width="2" filter="url(#shadow)"/>
+  <text x="875" y="328" class="micro">DOCKER COMPOSE · APP</text>
+  <text x="875" y="362" class="card-title">FastAPI application</text>
+  <text x="875" y="393" class="card-text">REST API + business rules</text>
+  <text x="875" y="416" class="card-text">Budget, approval, inventory,</text>
+  <text x="875" y="439" class="card-text">idempotency, fulfillment</text>
+
+  <rect x="1245" y="300" width="225" height="135" rx="16" fill="#ffffff" filter="url(#shadow)"/>
+  <text x="1275" y="342" class="micro">DOCKER COMPOSE · DB</text>
+  <text x="1275" y="374" class="card-title">PostgreSQL</text>
+  <text x="1275" y="404" class="card-text">Persistent local volume</text>
+  <text x="1275" y="427" class="card-text">SQLAlchemy + Alembic</text>
+
+  <path d="M 247 300 V 275 H 790 V 330 H 820" fill="none" stroke="#355d7b" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="500" y="267" class="arrow-label">HTTP / REST</text>
+  <path d="M 710 400 H 820" fill="none" stroke="#355d7b" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="714" y="465" class="arrow-label">API request</text>
+  <path d="M 1150 368 H 1225" fill="none" stroke="#355d7b" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="1157" y="335" class="arrow-label">SQL</text>
+
+  <rect x="70" y="550" width="1460" height="285" rx="22" fill="#eaf6ef" stroke="#b7dfc6" stroke-width="2"/>
+  <text x="105" y="595" class="lane-title">AWS deployment</text>
+  <text x="105" y="622" class="lane-note">The same containerized application runs on a small EC2 instance and connects privately to Amazon RDS.</text>
+
+  <rect x="205" y="670" width="275" height="120" rx="16" fill="#ffffff" filter="url(#shadow)"/>
+  <text x="235" y="700" class="micro">EXTERNAL CALLERS</text>
+  <text x="235" y="732" class="card-title">Browser and n8n</text>
+  <text x="235" y="760" class="card-text">Dashboard and external</text>
+  <text x="235" y="783" class="card-text">order automation requests</text>
+
+  <rect x="665" y="655" width="330" height="150" rx="16" fill="#dff1e5" stroke="#4e9a68" stroke-width="2" filter="url(#shadow)"/>
+  <text x="700" y="697" class="micro">AMAZON EC2</text>
+  <text x="700" y="731" class="card-title">Dockerized FastAPI app</text>
+  <text x="700" y="762" class="card-text">Environment-based configuration</text>
+  <text x="700" y="785" class="card-text">Health checks and application logs</text>
+
+  <rect x="1165" y="670" width="250" height="120" rx="16" fill="#ffffff" filter="url(#shadow)"/>
+  <text x="1195" y="700" class="micro">AMAZON RDS</text>
+  <text x="1195" y="732" class="card-title">PostgreSQL</text>
+  <text x="1195" y="760" class="card-text">Persistent deployed data</text>
+  <text x="1195" y="783" class="card-text">Private app-to-database link</text>
+
+  <path d="M 480 730 H 645" fill="none" stroke="#3b8060" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="530" y="695" class="arrow-label">HTTPS / REST</text>
+  <path d="M 995 730 H 1145" fill="none" stroke="#3b8060" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="1045" y="695" class="arrow-label">PostgreSQL</text>
+
+  <text x="90" y="880" class="lane-note">Business rules remain in FastAPI; n8n orchestrates external requests but does not calculate prices, budgets, or inventory decisions.</text>
+</svg>

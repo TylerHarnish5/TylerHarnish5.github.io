@@ -2,7 +2,3 @@ To add in the future:
 Projects
 |-> Roblox Game
 |   |->https://www.roblox.com/games/85845952014810/
-|-> Project Workbook from Object Oriented Analysis & Design
-|   |->Possibly message Harsh to get MongoDB working
-|-> Computer Architecture ML project
-|->
