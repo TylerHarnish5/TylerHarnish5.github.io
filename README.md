@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tyler Harnish Portfolio
 
-## Getting Started
+A personal portfolio site for Tyler Harnish, a computer science graduate focused on full-stack applications, workflow automation, databases, and machine learning.
 
-First, run the development server:
+## Highlights
+
+- **Residential Clothing Automation Platform** — A production-oriented full-stack application with order intake automation, a FastAPI backend, PostgreSQL data storage, Docker, AWS, GitHub Actions, and n8n workflows.
+- **TrashNet Waste Image Classification** — A ResNet18-based image classifier for recyclable waste categories, built with PyTorch and trained to 95.65% test accuracy.
+- **Responsive portfolio experience** — Animated, mobile-friendly presentation of projects, skills, education, resume, and contact information.
+
+## Tech Stack
+
+- **Framework:** Next.js 15, React 19, TypeScript
+- **Styling and animation:** Tailwind CSS, Framer Motion
+- **Application skills represented:** Python, FastAPI, PostgreSQL, SQLAlchemy, Docker, AWS, GitHub Actions, n8n, PyTorch, and scikit-learn
+
+## Run Locally
+
+### Prerequisites
+
+- Node.js
+- npm
+
+1. Clone the repository and enter the project directory.
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Available Scripts
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev    # Start the development server
+npm run build  # Create a production build
+npm run start  # Serve the production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+app/          Next.js routes, layout, and global styles
+components/   Reusable page sections and UI components
+hooks/        Shared React hooks
+public/       Resume and project imagery
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Links
 
-## Learn More
+- Portfolio: [tylerharnish5.github.io](https://tylerharnish5.github.io)
+- GitHub: [TylerHarnish5](https://github.com/TylerHarnish5)
+- LinkedIn: [Tyler Harnish](https://www.linkedin.com/in/tyler-harnish-th117)
 
-To learn more about Next.js, take a look at the following resources:
+## Contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tyler.M.Harnish@gmail.com
