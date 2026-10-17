@@ -1,6 +1,7 @@
 'use client';
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 // Updated Education Data
 const Education = [
@@ -51,6 +52,7 @@ const Skills = [
       { name: "React", icon: null, color: "#000000" },
       { name: "Next.js", icon: null, color: "#000000" },
       { name: "FastAPI", icon: null, color: "000000"},
+      { name: "Playwright", icon: null, color: "#000000" },
       { name: "Pydantic", icon: null, color: "#000000" },
       { name: "SQLAlchemy", icon: null, color: "#000000" },
       { name: "PyTorch", icon: null, color: "#000000" },
@@ -68,6 +70,7 @@ const Skills = [
     tech: [
       { name: "PostgreSQL", icon: null, color: "#000000" },
       { name: "MySQL", icon: null, color: "#000000" },
+      { name: "SQLite", icon: null, color: "#000000" },
       { name: "REST APIs", icon: null, color: "#000000" },
       { name: "Alembic", icon: null, color: "#000000" },
     ],
@@ -79,6 +82,7 @@ const Skills = [
     tech: [
       { name: "Git", icon: null, color: "#000000" },
       { name: "GitHub", icon: null, color: "#000000" },
+      { name: "Postman", icon: null, color: "#000000" },
       { name: "Vercel", icon: null, color: "#000000" },
       { name: "Hugging Face Datasets", icon: null, color: "#000000" },
       { name: "Docker", icon: null, color: "#000000" },
@@ -127,6 +131,32 @@ const Projects = [
     },
   },
   {
+    title: "Harbor & Pine Outfitters — QA & Test Automation Project",
+    description:
+      "Hands-on software QA and test automation project for a Flask e-commerce application, combining requirements-based manual testing, automated regression coverage, API and database validation, cross-browser testing, and continuous integration.",
+    bullets: [
+      "Executed manual black-box, functional, acceptance, regression, boundary, and negative testing across authentication, product search, cart management, checkout, and order history; documented defects and retested fixes.",
+      "Built a 16-test automated regression suite spanning UI/end-to-end, integration, and unit testing with pytest and Playwright, using reusable fixtures, parameterization, mocking, and Page Object Model structure.",
+      "Tested HTTP/API behavior with Python Requests and Postman and validated persisted order data with SQL and SQLite, including authentication, session state, redirects, cart validation, shipping calculations, and order totals.",
+      "Automated critical defect regressions with Playwright, verified selected UI flows across Chromium, Firefox, and WebKit, and configured GitHub Actions CI to run the regression suite on pushes and pull requests.",
+    ],
+    tech: [
+      { name: "Python", icon: null, color: "#000000" },
+      { name: "pytest", icon: null, color: "#000000" },
+      { name: "Playwright", icon: null, color: "#000000" },
+      { name: "Postman", icon: null, color: "#000000" },
+      { name: "Python Requests", icon: null, color: "#000000" },
+      { name: "SQL", icon: null, color: "#000000" },
+      { name: "SQLite", icon: null, color: "#000000" },
+      { name: "GitHub Actions", icon: null, color: "#000000" },
+      { name: "Flask", icon: null, color: "#000000" },
+    ],
+    image: "/playwright_chromium_stock.png",
+    links: {
+      github: "https://github.com/TylerHarnish5/qa-career-simulation",
+    },
+  },
+  {
     title: "TrashNet Waste Image Classification Using Deep Learning",
     description:
       "Deep learning image classification project that identifies waste across six material categories using transfer learning with ResNet18.",
@@ -170,7 +200,6 @@ const Projects = [
     image: "/thispage_stock.png",
     links: {
       live: "https://tylerharnish5.github.io", 
-      github: "https://github.com/TylerHarnish5",
       githubPortfolio: "https://github.com/TylerHarnish5/TylerHarnish5.github.io",
     },
   },
@@ -198,10 +227,72 @@ const Projects = [
   },
 ];
 
+const harborPineProjectTitle = "Harbor & Pine Outfitters — QA & Test Automation Project";
+const harborPineImages = [
+  {
+    src: "/playwright_chromium_stock.png",
+    alt: "Harbor & Pine checkout flow in Playwright Inspector",
+  },
+  {
+    src: "/harbor_pine_project_automation.png",
+    alt: "Harbor & Pine automated regression suite with 16 passing pytest tests",
+  },
+  {
+    src: "/harbor_pine_project_github_actions.png",
+    alt: "Harbor & Pine GitHub Actions regression workflow result",
+  },
+];
+
+type SelectedProjectImage =
+  | { kind: "single"; src: string; alt: string }
+  | { kind: "harborPine" };
 
 export default function Main() {
+  const [selectedProjectImage, setSelectedProjectImage] =
+    useState<SelectedProjectImage | null>(null);
+  const [harborPineImageIndex, setHarborPineImageIndex] = useState(0);
+  const [isHarborPineImageHovered, setIsHarborPineImageHovered] = useState(false);
+  const isHarborPineImageEnlarged = selectedProjectImage?.kind === "harborPine";
+  const selectedImage =
+    selectedProjectImage?.kind === "harborPine"
+      ? harborPineImages[harborPineImageIndex]
+      : selectedProjectImage;
+
+  const showPreviousHarborPineImage = () => {
+    setHarborPineImageIndex(
+      (index) => (index - 1 + harborPineImages.length) % harborPineImages.length,
+    );
+  };
+
+  const showNextHarborPineImage = () => {
+    setHarborPineImageIndex((index) => (index + 1) % harborPineImages.length);
+  };
+
+  useEffect(() => {
+    if (!selectedProjectImage) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedProjectImage(null);
+      }
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [selectedProjectImage]);
+
+  useEffect(() => {
+    if (isHarborPineImageHovered || isHarborPineImageEnlarged) return;
+
+    const carouselInterval = window.setInterval(showNextHarborPineImage, 4000);
+
+    return () => window.clearInterval(carouselInterval);
+  }, [isHarborPineImageEnlarged, isHarborPineImageHovered]);
+
   return (
-    <section className="py-32 relative">
+    <>
+      <section className="py-32 relative">
       <div className="max-w-7xl mx-auto px-6">
         {/* ===== EDUCATION SECTION ===== */}
         <motion.div
@@ -278,7 +369,7 @@ export default function Main() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               whileHover={{ y: -10, transition: { duration: 0.2 } }}
-              className="group relative h-[500px] rounded-3xl overflow-hidden bg-surface border border-white/10 cursor-pointer"
+              className={`group relative ${skill.title === "Tools & Platforms" ? "min-h-[500px]" : "h-[500px]"} rounded-3xl overflow-hidden bg-surface border border-white/10 cursor-pointer`}
             >
               {/* Image Section */}
               <motion.div className="h-[250px] relative" whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
@@ -332,6 +423,13 @@ export default function Main() {
 {/* Projects Grid */}
 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
   {Projects.map((project, i) => (
+    (() => {
+      const isHarborPineProject = project.title === harborPineProjectTitle;
+      const displayedImage = isHarborPineProject
+        ? harborPineImages[harborPineImageIndex]
+        : { src: project.image, alt: project.title };
+
+      return (
     <motion.div
       key={i}
       initial={{ opacity: 0, y: 50 }}
@@ -342,17 +440,57 @@ export default function Main() {
     >
       {/* Image Section */}
       <motion.div
-        className="h-[250px] relative"
+        onMouseEnter={() => isHarborPineProject && setIsHarborPineImageHovered(true)}
+        onMouseLeave={() => isHarborPineProject && setIsHarborPineImageHovered(false)}
+        className="relative h-[250px] w-full cursor-zoom-in border-0 bg-transparent p-0 text-left"
         whileHover={{ scale: 1.05 }}
         transition={{ duration: 0.2 }}
       >
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover"
-        />
+        <button
+          type="button"
+          onClick={() =>
+            setSelectedProjectImage(
+              isHarborPineProject
+                ? { kind: "harborPine" }
+                : {
+                    kind: "single",
+                    src: displayedImage.src,
+                    alt: `${project.title} project preview`,
+                  },
+            )
+          }
+          aria-label={`Open larger image for ${project.title}`}
+          className="relative h-full w-full border-0 bg-transparent p-0 text-left"
+        >
+          <Image
+            src={displayedImage.src}
+            alt={displayedImage.alt}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+          />
+        </button>
+
+        {isHarborPineProject && (
+          <>
+            <button
+              type="button"
+              onClick={showPreviousHarborPineImage}
+              aria-label="Show previous Harbor & Pine project image"
+              className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-3xl text-white/90 opacity-70 transition hover:bg-black/60 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              onClick={showNextHarborPineImage}
+              aria-label="Show next Harbor & Pine project image"
+              className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-3xl text-white/90 opacity-70 transition hover:bg-black/60 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              ›
+            </button>
+          </>
+        )}
       </motion.div>
 
       {/* Content Section */}
@@ -394,9 +532,9 @@ export default function Main() {
               </a>
             )}
 
-             {project.links?.GitHub_ResidentialClothingAutomation && (
+             {(project.links?.GitHub_ResidentialClothingAutomation || project.links?.github) && (
               <a
-                href={project.links.GitHub_ResidentialClothingAutomation}
+                href={project.links.GitHub_ResidentialClothingAutomation || project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-1 rounded-full bg-white/10 text-content text-sm border border-white/20
@@ -437,10 +575,71 @@ export default function Main() {
         </div>
       </motion.div>
     </motion.div>
+      );
+    })()
   ))}
 </div>
 
       </div>
-    </section>
+      </section>
+
+      {selectedImage && (
+        <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedImage.alt}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setSelectedProjectImage(null)}
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4 sm:p-8"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            onClick={(event) => event.stopPropagation()}
+            className="relative flex max-h-full w-full max-w-6xl items-center justify-center"
+          >
+            <Image
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              width={1600}
+              height={1000}
+              sizes="(max-width: 768px) 100vw, 90vw"
+              className="max-h-[85vh] w-auto max-w-full rounded-2xl object-contain"
+            />
+            {selectedProjectImage?.kind === "harborPine" && (
+              <>
+                <button
+                  type="button"
+                  onClick={showPreviousHarborPineImage}
+                  aria-label="Show previous Harbor & Pine project image"
+                  className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-3xl text-white/90 opacity-70 transition hover:bg-black/60 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  onClick={showNextHarborPineImage}
+                  aria-label="Show next Harbor & Pine project image"
+                  className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-3xl text-white/90 opacity-70 transition hover:bg-black/60 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  ›
+                </button>
+              </>
+            )}
+            <button
+              type="button"
+              onClick={() => setSelectedProjectImage(null)}
+              aria-label="Close enlarged image"
+              className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-2xl text-white transition-colors hover:bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              ×
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
+    </>
   );
 }
